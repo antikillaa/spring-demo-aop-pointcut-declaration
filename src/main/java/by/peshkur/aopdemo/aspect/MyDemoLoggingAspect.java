@@ -22,16 +22,16 @@ public class MyDemoLoggingAspect {
     private void setter() {}
 
 
-    //create point: include package .. exclude getters/sette
+    //create point: include package .. exclude getters/setter
     @Pointcut("forDaoPackage() && !(getter() || setter())")
+    private void forDaoPackageNoGetterSetter() {}
 
-
-    @Before("forDaoPackage()")
+    @Before("forDaoPackageNoGetterSetter()")
     public void beforeAddAccountAdvice() {
         System.out.println("\n=====>>> Executing @Before advice on method");
     }
 
-    @Before("forDaoPackage()")
+    @Before("forDaoPackageNoGetterSetter()")
     public void performApiAnalytics() {
         System.out.println("\n=====>>> Perform API analytics");
     }

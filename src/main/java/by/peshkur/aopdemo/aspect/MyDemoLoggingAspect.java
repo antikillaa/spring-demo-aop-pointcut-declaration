@@ -8,20 +8,27 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class MyDemoLoggingAspect {
-    //this is where add all of our related advices for logging
 
-    //let's start with an @before advice
-
-//    @Before("execution(public void add*())")
-
-    @Pointcut("execution(* *())")
+    @Pointcut("execution(* by.peshkur.aopdemo.dao.*.*(..))")
     private void forDaoPackage() {}
+
+    //create point cut for getter methods
+
+    @Pointcut("execution(* by.peshkur.aopdemo.dao.*.get*(..))")
+    private void getter() {}
+
+    //create point cut for setter methods
+    @Pointcut("execution(* by.peshkur.aopdemo.dao.*.set*(..))")
+    private void setter() {}
+
+
+    //create point: include package .. exclude getters/sette
+    @Pointcut("forDaoPackage() && !(getter() || setter())")
+
 
     @Before("forDaoPackage()")
     public void beforeAddAccountAdvice() {
-
         System.out.println("\n=====>>> Executing @Before advice on method");
-
     }
 
     @Before("forDaoPackage()")
